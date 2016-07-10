@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+#pycharm
+arduino database/.idea
+
 # Distribution / packaging
 .Python
 env/
