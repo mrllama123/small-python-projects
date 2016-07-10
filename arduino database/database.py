@@ -10,14 +10,15 @@ time.sleep(2)
 database = sqlite3.connect('server.db')
 databsepointer = database.cursor()
 
-databsepointer.execute('CREATE TABLE  IF NOT EXISTS tempArduino(temp FLOAT, date TEXT)')
+databsepointer.execute('CREATE TABLE  IF NOT EXISTS tempArduino(temp TEXT, date TEXT)')
 
 
 def readserial():
     while 1:
         if arduino_serial.inWaiting() > 0:
-            inputA = arduino_serial.read(5)
+            inputA = arduino_serial.readline()
             time.sleep(2)
+            print(inputA)
             databsepointer.execute("INSERT INTO tempArduino(temp, date) VALUES (?,?)", (inputA, str(datetime.now())))
             database.commit()
 
