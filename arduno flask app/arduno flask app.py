@@ -23,7 +23,7 @@ def main_page():
     # x = databsepointer.fetchall()
 
     title = 'temperature of room over time'
-    line_chart = pygal.Line(width=1200, height=600,
+    line_chart = pygal.Line(width=900, height=300,
                             explicit_size=True, title=title, disable_xml_declaration=True)
 
     line_chart.x_labels = map(str, range(2000, 2014))
