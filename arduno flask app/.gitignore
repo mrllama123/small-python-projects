@@ -7,9 +7,7 @@ __pycache__/
 *.so
 
 #pycharm
-.idea/
 arduino database/.idea
-arduno flask app/.idea
 
 # Distribution / packaging
 .Python
