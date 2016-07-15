@@ -5,8 +5,7 @@ import time
 
 port = "/dev/ttyACM0"
 arduino_serial = serial.Serial(port, 115200)
-# arduino_serial.setRTS(0)
-#arduino_serial.flush()
+arduino_serial.flush()
 time.sleep(2)
 database = sqlite3.connect('server.db')
 databsepointer = database.cursor()
@@ -15,13 +14,13 @@ databsepointer.execute('CREATE TABLE  IF NOT EXISTS tempArduino(temp TEXT, date 
 
 
 def readserial():
-    while 1:
+    while True:
         if arduino_serial.inWaiting() > 0:
-            inputA = arduino_serial.read(5)
-            # print(inputA)
-            time.sleep(10)
+            inputA = arduino_serial.readline()
+            time.sleep(2)
             databsepointer.execute("INSERT INTO tempArduino(temp, date) VALUES (?,?)", (inputA, str(datetime.now())))
             database.commit()
+            time.sleep(1800)
 
 
 if __name__ == "__main__":

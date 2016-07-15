@@ -14,13 +14,13 @@ databsepointer.execute('CREATE TABLE  IF NOT EXISTS tempArduino(temp TEXT, date 
 
 
 def readserial():
-    while 1:
+    while True:
         if arduino_serial.inWaiting() > 0:
             inputA = arduino_serial.readline()
             time.sleep(2)
-            print(inputA)
             databsepointer.execute("INSERT INTO tempArduino(temp, date) VALUES (?,?)", (inputA, str(datetime.now())))
             database.commit()
+            time.sleep(1800)
 
 
 if __name__ == "__main__":
