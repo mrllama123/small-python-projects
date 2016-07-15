@@ -1,12 +1,12 @@
-from flask import Flask, render_template, g
+from flask import Flask, render_template
 import sqlite3
 import pygal
-
-
 
 app = Flask(__name__)
 
 DATABASE = "server.db"
+
+
 def connect_db():
     return sqlite3.connect(DATABASE)
 
@@ -39,29 +39,45 @@ def connect_db():
 #
 def get_temp():
     db = connect_db()
+    temp = []
     cur = db.execute('SELECT temp FROM temparduino')
-    temputures = cur.fetchall()
-    return temputures
+    for t in cur:
+        temp.append(t[0])
+    db.close()
+    return temp
 
 
-# def get_date_time():
-#     g.db = connect_db()
-#     dates = []
-#     for d in g.db.execute('SELECT dates FROM tempArduino'):
-#         dates = d[:15]
-#     return dates
+def get_hu():
+    db = connect_db()
+    hu = []
+    cur = db.execute('SELECT humid FROM temparduino')
+    for t in cur:
+        hu.append(t[0])
+    db.close()
+    return hu
+
+
+def get_date_time():
+    db = connect_db()
+    dates = []
+    cur = db.execute('SELECT date FROM temparduino')
+    for d in cur:
+        dates.append(d[0])
+    db.close()
+    return dates
 
 
 @app.route('/')
 def main_page():
-    # x = test.get_date_time()
+    x = get_date_time()
     y = get_temp()
-
+    y2 = get_hu()
     title = 'temperature of room over time'
     line_chart = pygal.Line(width=860, height=300,
                             explicit_size=True, title=title, disable_xml_declaration=True)
-
-    line_chart.add('room temp', [82,13,39,50,50,77,55,36,70,7,56,7,59,64,14,79,92,75,76,62,13,13,6,45,86,95,89,11,100,56,10,28,82,10,30,45,83,76,88,91])
+    line_chart.x_labels = x
+    line_chart.add('room humidity', y2)
+    line_chart.add('room temp',y)  # [82,13,39,50,50,77,55,36,70,7,56,7,59,64,14,79,92,75,76,62,13,13,6,45,86,95,89,11,100,56,10,28,82,10,30,45,83,76,88,91])
     # line_chart.render()
 
     return render_template('main.html', title=title, line_chart=line_chart)
