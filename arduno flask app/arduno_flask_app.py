@@ -2,11 +2,11 @@ from flask import Flask, render_template, g
 import sqlite3
 import pygal
 
-DATABASE = 'server.db'
+
 
 app = Flask(__name__)
 
-
+DATABASE = "server.db"
 def connect_db():
     return sqlite3.connect(DATABASE)
 
@@ -41,7 +41,6 @@ def get_temp():
     db = connect_db()
     cur = db.execute('SELECT temp FROM temparduino')
     temputures = cur.fetchall()
-    db.close()
     return temputures
 
 
@@ -69,4 +68,4 @@ def main_page():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
