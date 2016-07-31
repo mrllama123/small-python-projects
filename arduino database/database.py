@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import sqlite3
 import serial
 from datetime import datetime
@@ -30,7 +31,7 @@ def readserial():
             time_val = time_stamp[0]+" "+current_time[:5]
             databsepointer.execute("INSERT INTO temparduino(temp,humid,date) VALUES (?,?,?)", (temp_val, humid_val,time_val))
             database.commit()
-            time.sleep(1800)
+            time.sleep(3600)
 
 
 if __name__ == "__main__":
