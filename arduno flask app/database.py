@@ -17,8 +17,6 @@ def readserial():
     while 1:
         if arduino_serial.inWaiting() > 0:
             data = arduino_serial.readline()
-            # ["b'42.80", "42.80\\r\\n'"]
-            # ['2016-07-15', '13:24:02.886386']
             d = str(data)
             values = d.split(" ")
             v1 = values[0]

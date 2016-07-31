@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import sqlite3
 import pygal
+import database
 
 app = Flask(__name__)
 
@@ -56,4 +57,5 @@ def main_page():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    database.readserial()
+    app.run()
